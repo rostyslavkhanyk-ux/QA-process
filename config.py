@@ -10,8 +10,9 @@ from pathlib import Path
 GCP_KEY_PATH = "/Users/rostyslav.khanyk/Desktop/MD files /gcp-key.json"
 BQ_PROJECT   = "brighterly-gcp"
 
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-ANTHROPIC_MODEL   = "claude-opus-4-6"  # highest quality for evaluation
+# Ollama local model — no API key required
+# Recommended: llama3.1 (quality) or llama3.2 (faster)
+OLLAMA_MODEL = "llama3.1"
 
 # ─── Shift Window ───────────────────────────────────────────────────────────────
 # Cron runs at 08:00 Kyiv (UTC+3 = 05:00 UTC).

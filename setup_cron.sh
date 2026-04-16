@@ -21,10 +21,11 @@ mkdir -p "${LOG_DIR}"
 install() {
     echo "Installing Brighterly QA Agent cron..."
 
-    if [ -z "${ANTHROPIC_API_KEY}" ]; then
-        echo "ERROR: ANTHROPIC_API_KEY is not set."
-        echo "Set it in your shell profile before running:"
-        echo "  export ANTHROPIC_API_KEY=sk-ant-..."
+    # Check Ollama is installed
+    if ! command -v ollama &> /dev/null; then
+        echo "ERROR: Ollama is not installed."
+        echo "Install it with:  brew install ollama"
+        echo "Then pull model:  ollama pull llama3.1"
         exit 1
     fi
 
@@ -45,8 +46,6 @@ install() {
 
     <key>EnvironmentVariables</key>
     <dict>
-        <key>ANTHROPIC_API_KEY</key>
-        <string>${ANTHROPIC_API_KEY}</string>
         <key>GOOGLE_APPLICATION_CREDENTIALS</key>
         <string>/Users/rostyslav.khanyk/Desktop/MD files /gcp-key.json</string>
     </dict>
@@ -110,8 +109,10 @@ case "${1}" in
     *)
         echo "Usage: $0 {install|uninstall|status}"
         echo ""
-        echo "Before installing, set your API key:"
-        echo "  export ANTHROPIC_API_KEY=sk-ant-..."
+        echo "Requires Ollama running locally (no API key needed):"
+        echo "  brew install ollama"
+        echo "  ollama pull llama3.1"
+        echo "  ollama serve &"
         echo "  ./setup_cron.sh install"
         exit 1
         ;;
